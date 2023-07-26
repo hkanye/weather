@@ -45,7 +45,7 @@
 //   "cod": 200
 // }
 
-const dataText = {
+export const dataText = {
   'temp': {
     'name': '温度',
     'unit': '℃',
@@ -120,7 +120,7 @@ const dataText = {
   },
 }
 
-const dataModuleName = {
+export const dataModuleName = {
   'main': '主要数据',
   'todayTemp': '今日温度',
   'wind': '风速',
@@ -129,7 +129,7 @@ const dataModuleName = {
 }
   
 
-const parseWeatherData = (data) => {
+export const parseWeatherData = (data) => {
   const { name, main, weather } = data;
   const { temp, humidity } = main;
   const { description } = weather[0];
@@ -161,4 +161,3 @@ const parseWeatherData = (data) => {
     }
   };
 }
-
