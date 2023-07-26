@@ -15,6 +15,7 @@ const weatherCache = {};
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ code: 500, error: 'Something went wrong' });
+  next();
 });
 
 // CORS中间件
@@ -36,6 +37,7 @@ app.get('/getWeather', async (req, res) => {
     // 检查缓存
     if (weatherCache[city]) {
       console.log('Serving from cache');
+      console.log(weatherCache[city]);
       return res.json(weatherCache[city]);
     }
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=zh_cn`;

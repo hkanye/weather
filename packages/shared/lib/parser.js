@@ -46,6 +46,10 @@
 // }
 
 export const dataText = {
+  'name': {
+    'name': '城市名',
+    'unit': '',
+  },
   'temp': {
     'name': '温度',
     'unit': '℃',
@@ -74,11 +78,11 @@ export const dataText = {
     'name': '能见度',
     'unit': 'm',
   },
-  'wind_speed': {
+  'speed': {
     'name': '风速',
     'unit': 'm/s',
   },
-  'wind_deg': {
+  'deg': {
     'name': '风向',
     'unit': '°',
   },
@@ -103,12 +107,30 @@ export const dataText = {
   'sunrise': {
     'name': '日出',
     'unit': '',
-    'parser': dataText.dt.parser,
+    'parser': (dt) => {
+      const date = new Date(dt * 1000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    },
   },
   'sunset': {
     'name': '日落',
     'unit': '',
-    'parser': dataText.dt.parser,
+    'parser': (dt) => {
+      const date = new Date(dt * 1000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    },
   },
   'name': {
     'name': '城市名',
@@ -122,34 +144,35 @@ export const dataText = {
 
 export const dataModuleName = {
   'main': '主要数据',
-  'todayTemp': '今日温度',
+  'todayTemp': '今日气温',
   'wind': '风速',
   'timeRange': '日照时间',
   'air': '空气质量',
 }
-  
 
 export const parseWeatherData = (data) => {
-  const { name, main, weather } = data;
-  const { temp, humidity } = main;
-  const { description } = weather[0];
+  const { name, main, weather, dt, visibility, sys, wind } = data;
+  const {
+    temp, humidity,
+    temp_max, temp_min, feels_like,
+    pressure
+  } = main;
+  const { sunrise, sunset } = sys;
+  const { description, icon } = weather[0];
   return {
     main: {
       name,
       temp,
       description,
+      feels_like,
+      icon,
       dt,
     },
     todayTemp: {
       temp_max,
       temp_min,
-      feels_like,
     },
-    wind: {
-      wind_speed,
-      wind_deg,
-      clouds,
-    },
+    wind,
     timeRange: {
       sunrise,
       sunset,
