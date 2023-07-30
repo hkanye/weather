@@ -1,5 +1,4 @@
 import './App.css';
-import Animate from 'rc-animate';
 import { Input, message, Descriptions } from 'antd';
 import axios from './util/axios';
 import { dataText, parseWeatherData, dataModuleName } from "shared/lib/parser";
