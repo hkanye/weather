@@ -1,4 +1,5 @@
 import './App.css';
+import Animate from 'rc-animate';
 import { Input, message, Descriptions } from 'antd';
 import axios from './util/axios';
 import { dataText, parseWeatherData, dataModuleName } from "shared/lib/parser";
@@ -51,6 +52,10 @@ function App() {
     }
     ).catch((error) => {
       console.log(error);
+      // 提示信息
+      message.error('数据获取失败');
+      setWeatherData(null);
+      setCurrentCity(null);
     }
     );
   };
