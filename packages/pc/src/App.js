@@ -1,5 +1,5 @@
 import './App.css';
-import { Input, message } from 'antd';
+import { Input, message, Descriptions } from 'antd';
 import axios from './util/axios';
 import { dataText, parseWeatherData, dataModuleName } from "shared/lib/parser";
 import { useState } from 'react';
@@ -13,6 +13,10 @@ function App() {
     weatherData,
     setWeatherData,
   ] = useState(null);
+  const [
+    currentCity,
+    setCurrentCity,
+  ] = useState(null);
 
   const onSearch = value => {
     // 调用接口，获取当前城市的天气信息
@@ -21,6 +25,10 @@ function App() {
     if (!value) {
       // 弹窗提示文案
       message.warning('请输入城市名称');
+      return;
+    }
+    // 是不是当前城市
+    if (currentCity === value) {
       return;
     }
     axios.get('/getWeather', {
@@ -34,10 +42,12 @@ function App() {
         // 弹窗提示文案
         message.warning('数据获取失败');
         setWeatherData(null);
+        setCurrentCity(null);
         return;
       }
       const weatherData = parseWeatherData(response.data);
       setWeatherData(weatherData);
+      setCurrentCity(value);
     }
     ).catch((error) => {
       console.log(error);
@@ -59,9 +69,7 @@ function App() {
         const moduleData = weatherData[moduleName];
         const moduleKeys = Object.keys(moduleData);
         return (
-          <div key={moduleName}>
-            <h2>{moduleTitle}</h2>
-            <div>
+          <Descriptions bordered key={moduleName} title={moduleTitle} style={{ marginTop: 14 }} >
               {moduleKeys.map((key) => {
                 const dataTextItem = dataText[key] || {};
                 const { name, unit, parser } = dataTextItem;
@@ -71,13 +79,10 @@ function App() {
                   return null;
                 }
                 return (
-                  <div key={key}>
-                    {name}: {parsedValue} {unit}
-                  </div>
+                    <Descriptions.Item key={key} label={name}>{parsedValue}{unit}</Descriptions.Item>
                 );
               })}
-            </div>
-          </div>
+          </Descriptions>
         )
       })}
     </div>

@@ -9,4 +9,14 @@ body {
 
 .App {
   padding: 10% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-descriptions-item-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
