@@ -26,3 +26,23 @@ server端使用express
 
 
 
+## 如何使用
+
+### 安装
+
+项目根目录运行脚本
+
+```bash
+npm install
+```
+
+### 运行
+
+项目根目录运行脚本
+
+```bash
+npm start
+```
+
+
+
